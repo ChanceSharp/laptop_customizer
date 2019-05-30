@@ -26,6 +26,34 @@ export default class AddFolder extends Component {
     if (inputValue.length === 0) {
       errorMsg = 'Folder Name is required';
       hasError = true;
+import React, { Component } from 'react';
+import ValiationError from './ValidationError';
+import NotesContext from '../NotesContext';
+
+export default class AddFolder extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {   
+      name: '',
+      folderValid: false,
+      validMessage: ''
+    }
+  }
+  
+  static contextType = NotesContext;
+
+  updateFolder(name) {
+    this.setState( {name: name}, () => {this.validateFolder(name)} )
+  }
+
+  validateFolder(inputValue) {
+    let errorMsg = this.state.validMessage;
+    let hasError = false;
+
+    inputValue = inputValue.trim();
+    if (inputValue.length === 0) {
+      errorMsg = 'Folder Name is required';
+      hasError = true;
 
     } else if (inputValue.length < 3) {
       errorMsg = 'Folder Name must be at least 3 characters';
